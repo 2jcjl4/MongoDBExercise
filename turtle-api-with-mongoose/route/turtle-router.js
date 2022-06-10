@@ -1,5 +1,7 @@
+
 const express = require('express');
-const Turtle = require('../model/Turtle');
+const ToDo = require('../model/Turtle');
+
 
 // we are defining router level middleware, so we need a Router object
 const router = express.Router();
@@ -9,7 +11,8 @@ router.get('/getAll', async (request, response, next) => {
     response.contentType('application/json') // contentType is a shortcut provided by Express for creating the 'Content-type': 'value' header
             .status(200)
             .json(await Turtle.find()); // converts object to json and puts in the response body
-    });
+    }); 
+
 
 router.post('/create', async (request, response, next) => {
     // data parsed into the request.body object can be accessed anywhere
@@ -20,11 +23,11 @@ router.post('/create', async (request, response, next) => {
         statusCode: 400, 
         message: 'Body cannot be empty' 
     });
+    const toDo = new ToDo(request.body);
 
-    const turtle = new Turtle(request.body);
-    await turtle.save(); // equivalent to insertOne({})
+    await toDo.save(); // equivalent to insertOne({})
 
-    response.status(201).json(turtle);
+    response.status(201).json(toDo);
 });
 
 router.put('/update/:id', async (request, response, next) => {
@@ -34,14 +37,14 @@ router.put('/update/:id', async (request, response, next) => {
         message: 'Body cannot be empty' 
     });
 
-    const turtle = await Turtle.updateOne({ _id: request.params.id }, request.body);
+    const toDo = await toDo.updateOne({ _id: request.params.id }, request.body);
     // when we find a resource in the db using .find(), it is tracked by Mongoose and that
-    // is why we can change the turtle objects fields and then save them as updates
+    // is why we can change the toDo objects fields and then save them as updates
     
-    if (turtle) {
-        response.status(200).json(await Turtle.findById(request.params.id));
+    if (toDo) {
+        response.status(200).json(await toDo.findById(request.params.id));
     } else {
-        next({ statusCode: 404, message: `Turtle with id ${request.params.id} does not exist`});
+        next({ statusCode: 404, message: `toDo with id ${request.params.id} does not exist`});
     }
 });
 
@@ -50,13 +53,26 @@ router.delete('/delete/:id', async (request, response, next) => {
     // that can be accessed on the request.params object
     const id = request.params.id;
 
-    const turtle = await Turtle.findByIdAndDelete(id);
+    const toDo = await toDo.findByIdAndDelete(id);
 
-    if (turtle) {
-        response.status(200).json(turtle);
+    if (toDo) {
+        response.status(200).json(toDo);
     } else {
-        next({ statusCode: 404, message: `Turtle with id ${id} does not exist`});
+        next({ statusCode: 404, message: `toDo with id ${id} does not exist`});
     }
 });
 
 module.exports = router;
+
+
+router.get('/getById', async (request, response, next) =>{
+    const id = request.params.id;
+    const toDo = toDo.findById(id);
+
+    if (toDo) {
+        response.status(200).json(toDo);
+    } else {
+        next({ statusCode: 404, message: `Task with id ${id} does not exist`});
+    } 
+})
+
