@@ -62,8 +62,6 @@ router.delete('/delete/:id', async (request, response, next) => {
     }
 });
 
-module.exports = router;
-
 
 router.get('/getById', async (request, response, next) =>{
     const id = request.params.id;
@@ -75,4 +73,7 @@ router.get('/getById', async (request, response, next) =>{
         next({ statusCode: 404, message: `Task with id ${id} does not exist`});
     } 
 })
+
+
+module.exports = router;
 
