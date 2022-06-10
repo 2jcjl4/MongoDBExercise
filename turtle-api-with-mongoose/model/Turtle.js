@@ -1,24 +1,16 @@
+
 const mongoose = require('mongoose');
+const toDo = require('./toDo');
 const Schema = mongoose.Schema;
 
-const turtleSchema = new Schema({
-    size: String,
-    colour: String,
-    snappy: Boolean,
-    species: String,
-    doesKungFu: Boolean,
-    born: Date
+const toDoShema = new Schema({
+    title: String,
+    shortDesc: String,
+    category: Boolean,
+    isDone: Boolean
 });
 
-const Turtle = mongoose.model('Turtle', turtleSchema);
+const toDo = mongoose.model('ToDo', toDoSchema);
 
-module.exports = Turtle;
+module.exports = toDo;
 
-// {
-//     size: "LARGE",
-//     colour: "RED",
-//     snappy: false,
-//     species: "leatherback",
-//     doesKungFu: true,
-//     born: new Date('1989-05-22')
-// }
