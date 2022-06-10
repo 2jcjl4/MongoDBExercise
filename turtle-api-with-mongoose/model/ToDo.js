@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const toDoShema = new Schema({
     title: String,
     shortDesc: String,
-    category: Boolean,
+    category: String,
     isDone: Boolean
 });
 
