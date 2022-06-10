@@ -1,5 +1,5 @@
 const express = require('express');
-const Turtle = require('../model/Turtle');
+const ToDo = require('../model/Turtle');
 
 // we are defining router level middleware, so we need a Router object
 const router = express.Router();
@@ -21,10 +21,10 @@ router.post('/create', async (request, response, next) => {
         message: 'Body cannot be empty' 
     });
 
-    const turtle = new Turtle(request.body);
-    await turtle.save(); // equivalent to insertOne({})
+    const toDo = new ToDo(request.body);
+    await toDo.save(); // equivalent to insertOne({})
 
-    response.status(201).json(turtle);
+    response.status(201).json(toDo);
 });
 
 router.put('/update/:id', async (request, response, next) => {
