@@ -64,11 +64,11 @@ module.exports = router;
 
 router.get('/getById', async (request, response, next) =>{
     const id = request.params.id;
-    const turtle = Turtle.findById(id);
+    const toDo = toDo.findById(id);
 
-    if (turtle) {
-        response.status(200).json(turtle);
+    if (toDo) {
+        response.status(200).json(toDo);
     } else {
-        next({ statusCode: 404, message: `Turtle with id ${id} does not exist`});
+        next({ statusCode: 404, message: `Task with id ${id} does not exist`});
     } 
 })
