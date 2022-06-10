@@ -2,13 +2,14 @@ const mongoose = require('mongoose');
 const toDo = require('./toDo');
 const Schema = mongoose.Schema;
 
-const toDoSchema = new Schema({
+const toDoShema = new Schema({
     title: String,
     shortDesc: String,
-    catagory: Boolean,
+    category: Boolean,
     isDone: Boolean
 });
 
-const Turtle = mongoose.model('toDo', toDoSchema);
+const toDo = mongoose.model('ToDo', toDoSchema);
 
 module.exports = toDo;
+

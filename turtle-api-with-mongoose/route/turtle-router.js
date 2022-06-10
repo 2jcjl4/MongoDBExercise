@@ -1,5 +1,6 @@
 const express = require('express');
-const toDo = require('../model/toDo');
+const ToDo = require('../model/Turtle');
+
 
 // we are defining router level middleware, so we need a Router object
 const router = express.Router();
@@ -8,8 +9,9 @@ const router = express.Router();
 router.get('/getAll', async (request, response, next) => {
     response.contentType('application/json') // contentType is a shortcut provided by Express for creating the 'Content-type': 'value' header
             .status(200)
-            .json(await toDo.find()); // converts object to json and puts in the response body
-    });
+            .json(await Turtle.find()); // converts object to json and puts in the response body
+    }); 
+
 
 router.post('/create', async (request, response, next) => {
     // data parsed into the request.body object can be accessed anywhere
@@ -20,8 +22,8 @@ router.post('/create', async (request, response, next) => {
         statusCode: 400, 
         message: 'Body cannot be empty' 
     });
+    const toDo = new ToDo(request.body);
 
-    const toDo = new toDo(request.body);
     await toDo.save(); // equivalent to insertOne({})
 
     response.status(201).json(toDo);
@@ -50,13 +52,25 @@ router.delete('/delete/:id', async (request, response, next) => {
     // that can be accessed on the request.params object
     const id = request.params.id;
 
-    const turtle = await Turtle.findByIdAndDelete(id);
+    const toDo = await toDo.findByIdAndDelete(id);
 
-    if (turtle) {
-        response.status(200).json(turtle);
+    if (toDo) {
+        response.status(200).json(toDo);
     } else {
-        next({ statusCode: 404, message: `Turtle with id ${id} does not exist`});
+        next({ statusCode: 404, message: `toDo with id ${id} does not exist`});
     }
 });
 
 module.exports = router;
+
+
+router.get('/getById', async (request, response, next) =>{
+    const id = request.params.id;
+    const toDo = toDo.findById(id);
+
+    if (toDo) {
+        response.status(200).json(toDo);
+    } else {
+        next({ statusCode: 404, message: `Task with id ${id} does not exist`});
+    } 
+})
