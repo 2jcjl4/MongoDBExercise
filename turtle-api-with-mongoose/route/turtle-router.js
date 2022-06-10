@@ -9,7 +9,7 @@ router.get('/getAll', async (request, response, next) => {
     response.contentType('application/json') // contentType is a shortcut provided by Express for creating the 'Content-type': 'value' header
             .status(200)
             .json(await Turtle.find()); // converts object to json and puts in the response body
-    });
+    }); 
 
 router.post('/create', async (request, response, next) => {
     // data parsed into the request.body object can be accessed anywhere
@@ -60,3 +60,15 @@ router.delete('/delete/:id', async (request, response, next) => {
 });
 
 module.exports = router;
+
+
+router.get('/getById', async (request, response, next) =>{
+    const id = request.params.id;
+    const toDo = toDo.findById(id);
+
+    if (toDo) {
+        response.status(200).json(toDo);
+    } else {
+        next({ statusCode: 404, message: `Task with id ${id} does not exist`});
+    } 
+})
