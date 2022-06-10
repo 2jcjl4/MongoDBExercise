@@ -50,12 +50,12 @@ router.delete('/delete/:id', async (request, response, next) => {
     // that can be accessed on the request.params object
     const id = request.params.id;
 
-    const turtle = await Turtle.findByIdAndDelete(id);
+    const toDo = await toDo.findByIdAndDelete(id);
 
-    if (turtle) {
-        response.status(200).json(turtle);
+    if (toDo) {
+        response.status(200).json(toDo);
     } else {
-        next({ statusCode: 404, message: `Turtle with id ${id} does not exist`});
+        next({ statusCode: 404, message: `toDo with id ${id} does not exist`});
     }
 });
 
