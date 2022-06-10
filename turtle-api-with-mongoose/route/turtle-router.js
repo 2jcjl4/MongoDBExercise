@@ -1,5 +1,5 @@
 const express = require('express');
-const Turtle = require('../model/Turtle');
+const toDo = require('../model/toDo');
 
 // we are defining router level middleware, so we need a Router object
 const router = express.Router();
@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/getAll', async (request, response, next) => {
     response.contentType('application/json') // contentType is a shortcut provided by Express for creating the 'Content-type': 'value' header
             .status(200)
-            .json(await Turtle.find()); // converts object to json and puts in the response body
+            .json(await toDo.find()); // converts object to json and puts in the response body
     });
 
 router.post('/create', async (request, response, next) => {
@@ -21,10 +21,10 @@ router.post('/create', async (request, response, next) => {
         message: 'Body cannot be empty' 
     });
 
-    const turtle = new Turtle(request.body);
-    await turtle.save(); // equivalent to insertOne({})
+    const toDo = new toDo(request.body);
+    await toDo.save(); // equivalent to insertOne({})
 
-    response.status(201).json(turtle);
+    response.status(201).json(toDo);
 });
 
 router.put('/update/:id', async (request, response, next) => {
