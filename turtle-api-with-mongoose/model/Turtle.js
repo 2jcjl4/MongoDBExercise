@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const toDo = require('./toDo');
 const Schema = mongoose.Schema;
 
 const toDoShema = new Schema({
@@ -8,7 +9,7 @@ const toDoShema = new Schema({
     isDone: Boolean
 });
 
-const toDo = mongoose.model('Turtle', toDoSchema);
+const toDo = mongoose.model('ToDo', toDoSchema);
 
 module.exports = toDo;
 

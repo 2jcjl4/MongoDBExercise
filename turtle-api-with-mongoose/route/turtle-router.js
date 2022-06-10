@@ -1,6 +1,7 @@
 const express = require('express');
 const ToDo = require('../model/Turtle');
 
+
 // we are defining router level middleware, so we need a Router object
 const router = express.Router();
 
@@ -11,6 +12,7 @@ router.get('/getAll', async (request, response, next) => {
             .json(await Turtle.find()); // converts object to json and puts in the response body
     }); 
 
+
 router.post('/create', async (request, response, next) => {
     // data parsed into the request.body object can be accessed anywhere
     // we have access to the request object
@@ -20,8 +22,8 @@ router.post('/create', async (request, response, next) => {
         statusCode: 400, 
         message: 'Body cannot be empty' 
     });
-
     const toDo = new ToDo(request.body);
+
     await toDo.save(); // equivalent to insertOne({})
 
     response.status(201).json(toDo);
@@ -34,11 +36,11 @@ router.put('/update/:id', async (request, response, next) => {
         message: 'Body cannot be empty' 
     });
 
-    const turtle = await Turtle.updateOne({ _id: request.params.id }, request.body);
+    const toDo = await toDo.updateOne({ _id: request.params.id }, request.body);
     // when we find a resource in the db using .find(), it is tracked by Mongoose and that
     // is why we can change the turtle objects fields and then save them as updates
     
-    if (turtle) {
+    if (toDo) {
         response.status(200).json(await Turtle.findById(request.params.id));
     } else {
         next({ statusCode: 404, message: `Turtle with id ${request.params.id} does not exist`});
