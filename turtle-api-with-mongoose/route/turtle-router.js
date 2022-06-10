@@ -34,14 +34,14 @@ router.put('/update/:id', async (request, response, next) => {
         message: 'Body cannot be empty' 
     });
 
-    const turtle = await Turtle.updateOne({ _id: request.params.id }, request.body);
+    const toDo = await toDo.updateOne({ _id: request.params.id }, request.body);
     // when we find a resource in the db using .find(), it is tracked by Mongoose and that
-    // is why we can change the turtle objects fields and then save them as updates
+    // is why we can change the toDo objects fields and then save them as updates
     
-    if (turtle) {
-        response.status(200).json(await Turtle.findById(request.params.id));
+    if (toDo) {
+        response.status(200).json(await toDo.findById(request.params.id));
     } else {
-        next({ statusCode: 404, message: `Turtle with id ${request.params.id} does not exist`});
+        next({ statusCode: 404, message: `toDo with id ${request.params.id} does not exist`});
     }
 });
 
@@ -50,7 +50,7 @@ router.delete('/delete/:id', async (request, response, next) => {
     // that can be accessed on the request.params object
     const id = request.params.id;
 
-    const turtle = await Turtle.findByIdAndDelete(id);
+    const toDo = await Turtle.findByIdAndDelete(id);
 
     if (turtle) {
         response.status(200).json(turtle);
