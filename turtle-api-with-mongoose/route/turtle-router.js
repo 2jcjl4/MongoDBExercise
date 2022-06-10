@@ -1,3 +1,4 @@
+
 const express = require('express');
 const ToDo = require('../model/Turtle');
 
@@ -38,12 +39,12 @@ router.put('/update/:id', async (request, response, next) => {
 
     const toDo = await toDo.updateOne({ _id: request.params.id }, request.body);
     // when we find a resource in the db using .find(), it is tracked by Mongoose and that
-    // is why we can change the turtle objects fields and then save them as updates
+    // is why we can change the toDo objects fields and then save them as updates
     
     if (toDo) {
-        response.status(200).json(await Turtle.findById(request.params.id));
+        response.status(200).json(await toDo.findById(request.params.id));
     } else {
-        next({ statusCode: 404, message: `Turtle with id ${request.params.id} does not exist`});
+        next({ statusCode: 404, message: `toDo with id ${request.params.id} does not exist`});
     }
 });
 
@@ -74,3 +75,4 @@ router.get('/getById', async (request, response, next) =>{
         next({ statusCode: 404, message: `Task with id ${id} does not exist`});
     } 
 })
+
