@@ -1,4 +1,6 @@
 
+
+
 const mongoose = require('mongoose');
 // const toDo = require('./ToDo');
 const Schema = mongoose.Schema;
@@ -6,7 +8,7 @@ const Schema = mongoose.Schema;
 const toDoSchema = new Schema({
     title: {
         type: String,
-        minlength: 3,
+        minlength: 3, //IT STAYS
         trim: true,
         required: [true, 'Title is required']
     },
@@ -19,9 +21,9 @@ const toDoSchema = new Schema({
     },
     isDone: {
         type: Boolean,
-        trim: true,
-        required: [true, 'isDone status is required']
+        default: false
     }
+
 });
 
 const toDo = mongoose.model('ToDo', toDoSchema);

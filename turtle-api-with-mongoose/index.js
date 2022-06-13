@@ -1,3 +1,5 @@
+//MORGANS BASE CODE REFERENCE -- https://github.com/MrWalshyType2/turtle-api-with-mongoose
+
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
