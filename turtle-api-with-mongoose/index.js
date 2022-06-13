@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const turtleRouter = require('./route/turtle-router');
+const toDoRouter = require('./route/toDo-router');
 const PORT = process.env.PORT || 3000; // if process.env.PORT is not undefined or null, it will be assigned to PORT
 const DATABASE = 'test';
 const DB_URI = `mongodb://localhost:27017/${DATABASE}`;
@@ -13,7 +13,7 @@ const app = express();
 // - morgan() returns a middleware function when called
 app.use(morgan('dev'));
 app.use(express.json()); // built-in middleware for parsing JSON data in the request body
-app.use('/turtle', turtleRouter);
+app.use('/toDo', toDoRouter);
 
 // error handling middleware
 // - first param is always the error
@@ -32,5 +32,6 @@ function main() {
         }
     });
 }
+
 
 main();
